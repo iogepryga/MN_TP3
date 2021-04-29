@@ -28,7 +28,7 @@ complexe.o: $(INC_DIR)/complexe.h complexe.c
 # BLAS 1
 
 copy.o : copy.c $(INC_DIR)/mnblas.h
-	gcc $(OPTIONS) -c copy.c
+	gcc $(OPTIONS) -c copy.c -lm
 
 swap.o : swap.c $(INC_DIR)/mnblas.h
 	gcc  $(OPTIONS) -c swap.c

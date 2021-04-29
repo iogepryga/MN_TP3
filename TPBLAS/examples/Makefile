@@ -9,7 +9,7 @@ LIBDYN=-lmnblasdyn
 
 OPTIONS_COMPIL  = -g -Wall -O2 -fPIC -I$(INC_DIR)
 
-OPTIONS_LINK_STATIC  =   -fopenmp -L$(LIB_DIR) $(LIBST)  
+OPTIONS_LINK_STATIC  = -fopenmp -L$(LIB_DIR) $(LIBST) -lm
 OPTIONS_LINK_DYN  = -fopenmp -L$(LIB_DIR) $(LIBDYN)  
 
 test_dot: test_dot.o testutils.o $(LIB_DIR)/libmnblas.a
@@ -88,7 +88,7 @@ test_iamax.o : test_iamax.c $(INC_DIR)/mnblas.h testutils.h
 
 
 test_nrm2: test_nrm2.o testutils.o  $(LIB_DIR)/libmnblas.a
-	gcc -o test_nrm2 test_nrm2.o testutils.o $(OPTIONS_LINK_STATIC) -lm
+	gcc -o test_nrm2 test_nrm2.o testutils.o $(OPTIONS_LINK_STATIC)
 
 test_nrm2.o : test_nrm2.c $(INC_DIR)/mnblas.h testutils.h
 	gcc $(OPTIONS_COMPIL) -c test_nrm2.c

@@ -1,4 +1,5 @@
 #include <stddef.h>
+#include <omp.h>
 #define CBLAS_INDEX size_t  /* this may vary between platforms */
 
 typedef enum {MNCblasRowMajor=101, MNCblasColMajor=102} MNCBLAS_LAYOUT;

@@ -25,9 +25,8 @@ float mncblas_sdot(const int N, const float *X, const int incX, const float *Y, 
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
 #pragma omp parallel for reduction(+:dot)
-  for (register unsigned int i = 0 ; i < max ; i++) {
+  for (register unsigned int i = 0 ; i < max ; i++)
     dot += X [i] * Y [diff*i];
-  }
   return dot;
 }
 
@@ -36,9 +35,8 @@ double mncblas_ddot(const int N, const double *X, const int incX, const double *
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
 #pragma omp parallel for reduction(+:dot)
-  for (register unsigned int i = 0 ; i < max ; i++) {
+  for (register unsigned int i = 0 ; i < max ; i++)
     dot += X [i] * Y [diff*i];
-  }
   return dot;
 }
 

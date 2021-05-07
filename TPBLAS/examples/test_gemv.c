@@ -472,12 +472,11 @@ int main (int argc, char **argv) {
 
     #define M_FLOPS             1000
     #define N_FLOPS             1000
-    #define NB_EXPE_VISIBLE     6
-    #define NB_EXPE             100
+    #define NB_EXPE             10000
     #define NB_OPE_REEL        (M_FLOPS*N_FLOPS*2+M_FLOPS*3)
     #define NB_OPE_COMPLEXE    (M_FLOPS*N_FLOPS*8+M_FLOPS*14)
 
-    MAX_SIZE = (M_RESULTAT < N_RESULTAT ? N_RESULTAT : M_RESULTAT);
+    MAX_SIZE = (M_FLOPS < N_FLOPS ? N_FLOPS : M_FLOPS);
     V1s = (float*)malloc(MAX_SIZE*sizeof(float)); V2s = (float*)malloc(MAX_SIZE*sizeof(float));
     V1d = (double*)malloc(MAX_SIZE*sizeof(double)); V2d = (double*)malloc(MAX_SIZE*sizeof(double));
     V1c = (complexe_float_t*)malloc(MAX_SIZE*sizeof(complexe_float_t)); V2c = (complexe_float_t*)malloc(MAX_SIZE*sizeof(complexe_float_t));
@@ -505,7 +504,7 @@ int main (int argc, char **argv) {
         mncblas_sgemv(MNCblasRowMajor,MNCblasNoTrans,M_FLOPS,N_FLOPS,2,Ms,1,V1s,1,2,V2s,1);
     }
     end = _rdtsc();
-    calcul_flop("mncblas_sgemv : ", NB_EXPE*NB_OPE_REEL ,end-start);
+    calcul_flop("mncblas_sgemv : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_REEL) ,end-start);
     printf("<--------------------------------------------------------------->\n                      double\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -520,7 +519,7 @@ int main (int argc, char **argv) {
         mncblas_dgemv(MNCblasRowMajor,MNCblasNoTrans,M_FLOPS,N_FLOPS,2,Md,1,V1d,1,2,V2d,1);
     }
     end = _rdtsc();
-    calcul_flop("mncblas_dgemv : ", NB_EXPE*(NB_OPE_REEL) ,end-start);
+    calcul_flop("mncblas_dgemv : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_REEL) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_float_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -535,7 +534,7 @@ int main (int argc, char **argv) {
         mncblas_cgemv(MNCblasRowMajor,MNCblasNoTrans,M_FLOPS,N_FLOPS,&tmpc,Mc,1,V1c,1,&tmpc,V2c,1);
     }
     end = _rdtsc();
-    calcul_flop("mncblas_cgemv : ", NB_EXPE*(NB_OPE_COMPLEXE) ,end-start);
+    calcul_flop("mncblas_cgemv : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_COMPLEXE) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_double_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -550,7 +549,7 @@ int main (int argc, char **argv) {
         mncblas_zgemv(MNCblasRowMajor,MNCblasNoTrans,M_FLOPS,N_FLOPS,&tmpz,Mz,1,V1z,1,&tmpz,V2z,1);
     }
     end = _rdtsc();
-    calcul_flop("mncblas_zgemv : ", NB_EXPE*(NB_OPE_COMPLEXE) ,end-start);
+    calcul_flop("mncblas_zgemv : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_COMPLEXE) ,end-start);
 
 
     // free(V1s);

@@ -21,11 +21,11 @@ void init_flop () {
 }
 
 void calcul_flop (char *message, unsigned long long int nb_operations_flottantes, unsigned long long int cycles) {
-  printf ("%s %lld operations %5.3f GFLOP/s\n", message, nb_operations_flottantes, ((float) nb_operations_flottantes) / (((float) (cycles - residu)) * duree_cycle)) ;
+  printf ("%s %lld operations %5.3f GFLOP/s\n", message, nb_operations_flottantes, ((double) nb_operations_flottantes) / (((double) (cycles - residu)) * duree_cycle)) ;
 }
 
 void calcul_o (char *message, unsigned long long int o, unsigned long long int cycles) {
-  printf ("%s %lld octets %5.3f GO/s\n", message, o, ((float) o) / (((float) (cycles - residu)) * duree_cycle)) ;
+  printf ("%s %lld octets %5.3f GO/s\n", message, o, ((double) o) / (((double) (cycles - residu)) * duree_cycle)) ;
 }
 
 complexe_float_t gen_complexe_float (const float real, const float imaginary) {

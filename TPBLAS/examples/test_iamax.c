@@ -111,7 +111,6 @@ int main (int argc, char **argv) {
     free(V1z);
 
     #define VECSIZE_OS             100000
-    #define NB_EXPE_VISIBLE         6
     #define NB_EXPE                 1000
     #define NB_O_REEL_FLOAT        (VECSIZE_OS*sizeof(float)) // Il y a pas de affection de manière constante, donc je vais consider la lecture comme unité.
     #define NB_O_REEL_DOUBLE       (VECSIZE_OS*sizeof(double))

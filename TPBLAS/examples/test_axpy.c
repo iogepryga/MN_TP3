@@ -139,9 +139,8 @@ int main (int argc, char **argv) {
     free(V2c);
     free(V2z);
 
-    #define VECSIZE_FLOPS       100000
-    #define NB_EXPE_VISIBLE     6
-    #define NB_EXPE             1000
+    #define VECSIZE_FLOPS       10000
+    #define NB_EXPE             1000000
     #define NB_OPE_REEL         (2*VECSIZE_FLOPS)
     #define NB_OPE_COMPLEXE     (8*VECSIZE_FLOPS)
 
@@ -167,7 +166,7 @@ int main (int argc, char **argv) {
         mnblas_saxpy(VECSIZE_FLOPS,2,V1s,1,V2s,1);
     }
     end = _rdtsc();
-    calcul_flop("mnblas_saxpy : ", NB_EXPE*NB_OPE_REEL ,end-start);
+    calcul_flop("mnblas_saxpy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_REEL) ,end-start);
     printf("<--------------------------------------------------------------->\n                      double\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -182,7 +181,7 @@ int main (int argc, char **argv) {
         mnblas_daxpy(VECSIZE_FLOPS,2,V1d,1,V2d,1);
     }
     end = _rdtsc();
-    calcul_flop("mnblas_daxpy : ", NB_EXPE*NB_OPE_REEL ,end-start);
+    calcul_flop("mnblas_daxpy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_REEL) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_float_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -197,7 +196,7 @@ int main (int argc, char **argv) {
         mnblas_caxpy(VECSIZE_FLOPS,&tmpc,V1c,1,V2c,1);
     }
     end = _rdtsc();
-    calcul_flop("mnblas_caxpy : ", NB_EXPE*NB_OPE_COMPLEXE ,end-start);
+    calcul_flop("mnblas_caxpy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_COMPLEXE) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_double_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -212,7 +211,7 @@ int main (int argc, char **argv) {
         mnblas_zaxpy(VECSIZE_FLOPS,&tmpz,V1z,1,V2z,1);
     }
     end = _rdtsc();
-    calcul_flop("mnblas_zaxpy : ", NB_EXPE*NB_OPE_COMPLEXE ,end-start);
+    calcul_flop("mnblas_zaxpy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_OPE_COMPLEXE) ,end-start);
 
 
 

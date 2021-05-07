@@ -138,8 +138,7 @@ int main (int argc, char **argv) {
     free(V2z);
 
     #define VECSIZE_OS             100000
-    #define NB_EXPE_VISIBLE         6
-    #define NB_EXPE                 1000
+    #define NB_EXPE                1000000
     #define NB_O_REEL_FLOAT        (VECSIZE_OS*sizeof(float))
     #define NB_O_REEL_DOUBLE       (VECSIZE_OS*sizeof(double))
     #define NB_O_COMPLEXE_FLOAT    (VECSIZE_OS*sizeof(complexe_float_t))
@@ -167,7 +166,7 @@ int main (int argc, char **argv) {
         mncblas_scopy(VECSIZE_OS,V1s,1,V2s,1);
     }
     end = _rdtsc();
-    calcul_o("mncblas_scopy : ", NB_EXPE*NB_O_REEL_FLOAT ,end-start);
+    calcul_o("mncblas_scopy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_O_REEL_FLOAT) ,end-start);
     printf("<--------------------------------------------------------------->\n                      double\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -182,7 +181,7 @@ int main (int argc, char **argv) {
         mncblas_dcopy(VECSIZE_OS,V1d,1,V2d,1);
     }
     end = _rdtsc();
-    calcul_o("mncblas_dcopy : ", NB_EXPE*NB_O_REEL_DOUBLE ,end-start);
+    calcul_o("mncblas_dcopy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_O_REEL_DOUBLE) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_float_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -197,7 +196,7 @@ int main (int argc, char **argv) {
         mncblas_ccopy(VECSIZE_OS,V1c,1,V2c,1);
     }
     end = _rdtsc();
-    calcul_o("mncblas_ccopy : ", NB_EXPE*NB_O_COMPLEXE_FLOAT ,end-start);
+    calcul_o("mncblas_ccopy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_O_COMPLEXE_FLOAT) ,end-start);
     printf("<--------------------------------------------------------------->\n                      complexe_double_t\n");
     for(int i = 0; i < NB_EXPE_VISIBLE; i++) {
         printf("------------------------------------------------\n");
@@ -212,7 +211,7 @@ int main (int argc, char **argv) {
         mncblas_zcopy(VECSIZE_OS,V1z,1,V2z,1);
     }
     end = _rdtsc();
-    calcul_o("mncblas_zcopy : ", NB_EXPE*NB_O_COMPLEXE_DOUBLE,end-start);
+    calcul_o("mncblas_zcopy : ", ((unsigned long long int)NB_EXPE)*((unsigned long long int)NB_O_COMPLEXE_DOUBLE),end-start);
 
 
     free(V1s);

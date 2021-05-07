@@ -319,7 +319,6 @@ int main (int argc, char **argv) {
     free(V1z);
 
     #define VECSIZE_FLOPS       100000
-    #define NB_EXPE_VISIBLE     6
     #define NB_EXPE             1000
     #define NB_OPE_REEL         (2*VECSIZE_FLOPS) // PAR VECTEUR
     #define NB_OPE_COMPLEXE     (8*VECSIZE_FLOPS) // PAR VECTEUR
@@ -356,6 +355,7 @@ int main (int argc, char **argv) {
         calcul_flop("mncblas_sdot : ", NB_OPE_REEL ,end-start);
     }
     printf("<--------------------------------------------------------------->\n                      float sur NB_EXPE (%d)\n",NB_EXPE);
+    start = _rdtsc();
     for(int i = 0; i < NB_EXPE; i++) {
         mncblas_sdot (VECSIZE_RESULTAT,V1s,1,V2s,1);
     }

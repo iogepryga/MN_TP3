@@ -143,7 +143,6 @@ int main (int argc, char **argv) {
 
 
     #define VECSIZE_OS             100000
-    #define NB_EXPE_VISIBLE         6
     #define NB_EXPE                 1000
     #define NB_O_REEL_FLOAT        (3*VECSIZE_OS*sizeof(float))
     #define NB_O_REEL_DOUBLE       (3*VECSIZE_OS*sizeof(double))

@@ -1,0 +1,71 @@
+A faire :
+dot
+axpy
+gemv
+gemm
+copy
+le reste c'est bonus !
+
+LE VECSIZE et la taille des elements influe sur les GFLOPS avec un comportement en X(1-e⁻VECSIZE) et X étant un "GFLOPS stable" (cad j'ai beau GFLOPS pour 100000 et 100000000, X sera le même)
++ NB_EXPE -> + de précision des GFLOPS. En faite, y'a un max et plus y'a d'EXPE plus on tend vers ce max (plus les exceptionnelement bas sont noyé dans la masse des maxs)
+Les test1 et test2 sont identique (cad que je n'ai rien modifié dans le code entre les deux, il sont lancé l'un apres l'autre)
+Avec un NB_EXPE assez grand , les valeurs entre le test1 et le test2 ne doivent pas differé de bq.
+Je précise que seul VSCode était ouvert sur mon ordi, que je ne faisait rien d'autre. Tout ça pour avoir de cohérence entre les tests et entre les différents types.
+
+copy : NB_EXPE : 100000 | VECSIZE_OS : 100000 | 
+                       BEFORE          |        AFTER 
+                     test1 test2 test3 | test1  test2  test3
+simple          ->   2.923 2.810 2.927   7.715  7.885  7.440         (40000000000 octets)
+double          ->   5.696 5.679 5.830   15.175 15.020 14.394        (80000000000 octets)
+complexe_float  ->   5.819 5.853 5.863   15.216 15.215 14.403        (80000000000 octets)
+complexe_double ->   9.471 9.579 9.552   26.822 25.738 23.462        (160000000000 octets)
+commentaire :
+- les test3 ont été réaliser avec NB_EXPE = 1000000 au lieu de 100000 (x10 quoi). La baisse de performance est expliqué par mon pc qui a surchauffé (+de 90°C)... (j'ai relancé desuite apres et j'ai eu 6.554 pour single ...)
+- amélioration d'un facteur 2, voir 3. et ça sera généralement le cas pour tout le reste
+
+
+axpy : NB_EXPE : 1000000 | VECSIZE_OS : 10000
+                       BEFORE         |       AFTER 
+                    test1 test2 test3 | test1 test2 test3
+simple          ->  0.948 0.955 0.944   2.182 2.262 2.085
+double          ->  1.020 1.020 1.021   2.454 2.497 2.440
+complexe_float  ->  0.493 0.496 1.653   2.692 2.751 4.260
+complexe_double ->  0.741 0.760 1.347   2.244 2.253 3.783
+- On remarque que on "perd" de la performance avec les complexes pour le test1 et test2 mais pas le test3. Pourquoi ? qu'est ce que tom a fait ? de la magie ? En faite non. la magie n'existe pas. Voila. Non je dec. enfaite enfaite, dans les fonctions que j'avais coder dans le TP2 et que j'ai donc repris pour le TP3, pour les complexe, j'appelais des fonctions de complexe.c (multiplication et addition). Ce sont ces appels qui ralentisse autant. Comment j'en suis si sur ? bah le test3 le prouve. j'ai enlevé les appelle et ai tout mis dans les fonctions directement.
+- Amelioration d'un facteur 2, voir 3.
+
+
+gemv : NB_EXPE : 10000 | M & N : 1000
+                      BEFORE    |    AFTER 
+                    test1 test2 | test1 test2 
+simple          ->  1.206 1.208   2.524 2.522
+double          ->  1.211 1.211   2.702 2.588
+complexe_float  ->  0.487 0.485   2.713 2.609
+complexe_double ->  0.736 0.733   2.271 2.167
+- Amelioration d'un facteur 2, voir 3.
+- J'ai eu la flemme de faire comme pour axpy et de faire un test3. mais tkt je l'ai fait pour gemm <3
+
+
+
+gemm : NB_EXPE : 10000 | M & N & K : 100
+                        BEFORE        |       AFTER 
+                    test1 test2 test3 | test1 test2 test3
+simple          ->  1.033 1.053 1.053   2.449 2.307 2.502
+double          ->  1.063 1.062 1.063   1.995 1.940 1.956
+complexe_float  ->  0.471 0.470 1.214   2.560 2.474 3.136
+complexe_double ->  0.678 0.674 1.095   2.117 2.120 2.984
+- Amelioration d'un facteur 2, voir 3.
+- Pour le test3 : idem que pour axpy
+
+
+
+
+
+
+
+
+
+
+
+
+Il manque dot non ? Bonne question : les valeurs de GFLOPS sont incohérentes (genre 1221 GFLOPS .... sur un pc portable ...) docn en attendant de trouver d'ou viens le pb -> FLEMME

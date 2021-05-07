@@ -113,7 +113,6 @@ int main (int argc, char **argv) {
     free(V1z);
 
     #define VECSIZE_FLOPS       100000
-    #define NB_EXPE_VISIBLE     6
     #define NB_EXPE             1000
     #define NB_OPE_REEL         (1*VECSIZE_FLOPS) // 1 car ici les vecteurs sont positif , pas besoin de réaliser l'absolue
     #define NB_OPE_COMPLEXE     (2*VECSIZE_FLOPS) // 2 car ici les vecteurs sont positif , pas besoin de réaliser l'absolue

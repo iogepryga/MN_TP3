@@ -7,7 +7,7 @@ LIB_DIR=../lib
 INC_DIR=../include
 OPTIM= -fopenmp
 
-OPTIONS= -Wall -fPIC $(OPTIM) -I$(INC_DIR)
+OPTIONS= -g -Wall -fPIC $(OPTIM) -I$(INC_DIR)
 # Bibliothèque statique
 
 libmnblas.a: copy.o swap.o dot.o axpy.o asum.o iamin.o iamax.o nrm2.o gemv.o gemm.o complexe.o
@@ -28,7 +28,7 @@ complexe.o: $(INC_DIR)/complexe.h complexe.c
 # BLAS 1
 
 copy.o : copy.c $(INC_DIR)/mnblas.h
-	gcc $(OPTIONS) -c copy.c -lm
+	gcc $(OPTIONS) -c copy.c
 
 swap.o : swap.c $(INC_DIR)/mnblas.h
 	gcc  $(OPTIONS) -c swap.c

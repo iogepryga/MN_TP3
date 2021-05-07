@@ -8,11 +8,13 @@
 #include "complexe.h"
 #endif
 
+#define NB_EXPE_VISIBLE     0
+
 typedef enum {TYPE_FLOAT, TYPE_DOUBLE,TYPE_COMPLEXE_FLOAT,TYPE_COMPLEXE_DOUBLE} VTYPE;
 
 void init_flop () ;
 void calcul_flop (char *message, unsigned long long int nb_operations_flottantes, unsigned long long int cycles) ;
-void calcul_o (char *message, unsigned long long int nb_operations_flottantes, unsigned long long int cycles) ;
+void calcul_o (char *message, unsigned long long int o, unsigned long long int cycles) ;
 
 complexe_float_t gen_complexe_float (const float real, const float imaginary);
 complexe_double_t gen_complexe_double (const double real, const double imaginary);

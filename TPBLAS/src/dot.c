@@ -41,70 +41,88 @@ double mncblas_ddot(const int N, const double *X, const int incX, const double *
 }
 
 void mncblas_cdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu) { // NB OPE FLOTANTE = 8*N
-  register complexe_float_t dot; dot.real=0; dot.imaginary =0; //tmp
+  register complexe_float_t tmp;
+  register float dotreal=0, dotimaginary=0;
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
-#pragma omp parallel for
+#pragma omp parallel for private(tmp) reduction(+:dotreal) reduction(+:dotimaginary)
   for (register unsigned int i = 0 ; i < max ; i++) {
-#pragma omp critical
-    dot = add_complexe_float(dot,mult_complexe_float(*((complexe_float_t*)X+i),*((complexe_float_t*)Y+diff*i))); // 6 + 2
+    tmp = mult_complexe_float(*((complexe_float_t*)X+i),*((complexe_float_t*)Y+diff*i));
+    dotreal +=  tmp.real;
+    dotimaginary +=  tmp.imaginary;
   }
-
-
+  
   if(N >= 0) {
-    *(complexe_float_t*)dotu = dot;
+    ((complexe_float_t*)dotu)->real = dotreal;
+    ((complexe_float_t*)dotu)->imaginary = dotimaginary;
   } else {
-    ((complexe_float_t*)dotu)->real = 0;((complexe_float_t*)dotu)->imaginary = 0;
+    ((complexe_float_t*)dotu)->real = 0;
+    ((complexe_float_t*)dotu)->imaginary = 0;
   }
 }
 
 void mncblas_cdotc_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotc) { // NB OPE FLOTANTE = 9*N
-  register complexe_float_t dot; dot.real=0; dot.imaginary =0; //tmp
+  register complexe_float_t tmp;
+  register float dotreal=0, dotimaginary =0;
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
-#pragma omp parallel for
+#pragma omp parallel for private(tmp) reduction(+:dotreal) reduction(+:dotimaginary) // on peut pas reduire une structure
   for (register unsigned int i = 0 ; i < max ; i++) {
     ((complexe_float_t*)X+i)->imaginary *= -1;
-#pragma omp critical
-    dot = add_complexe_float(dot,mult_complexe_float(*((complexe_float_t*)X+i),*((complexe_float_t*)Y+diff*i)));
+    tmp = mult_complexe_float(*((complexe_float_t*)X+i),*((complexe_float_t*)Y+diff*i));
+    dotreal +=  tmp.real;
+    dotimaginary +=  tmp.imaginary;
   }
+
   if(N >= 0) {
-    *(complexe_float_t*)dotc = dot;
+    ((complexe_float_t*)dotc)->real = dotreal;
+    ((complexe_float_t*)dotc)->imaginary = dotimaginary;
   } else {
-    ((complexe_float_t*)dotc)->real = 0;((complexe_float_t*)dotc)->imaginary = 0;
+    ((complexe_float_t*)dotc)->real = 0;
+    ((complexe_float_t*)dotc)->imaginary = 0;
   }
 }
 
 void mncblas_zdotu_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotu) { // NB OPE FLOTANTE = 8*N
-  register complexe_double_t dot; dot.real=0; dot.imaginary =0; //tmp
+  register complexe_double_t tmp;
+  register double dotreal=0, dotimaginary =0;
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
-#pragma omp parallel for
+#pragma omp parallel for private(tmp) reduction(+:dotreal) reduction(+:dotimaginary) // on peut pas reduire une structure
   for (register unsigned int i = 0 ; i < max ; i++) {
-#pragma omp critical
-    dot = add_complexe_double(dot,mult_complexe_double(*((complexe_double_t*)X+i),*((complexe_double_t*)Y+diff*i)));
+    tmp = mult_complexe_double(*((complexe_double_t*)X+i),*((complexe_double_t*)Y+diff*i));
+    dotreal +=  tmp.real;
+    dotimaginary +=  tmp.imaginary;
   }
+
   if(N >= 0) {
-    *(complexe_double_t*)dotu = dot;
+    ((complexe_double_t*)dotu)->real = dotreal;
+    ((complexe_double_t*)dotu)->imaginary = dotimaginary;
   } else {
-    ((complexe_double_t*)dotu)->real = 0;((complexe_double_t*)dotu)->imaginary = 0;
+    ((complexe_double_t*)dotu)->real = 0;
+    ((complexe_double_t*)dotu)->imaginary = 0;
   }
 }
   
 void mncblas_zdotc_sub(const int N, const void *X, const int incX, const void *Y, const int incY, void *dotc) { // NB OPE FLOTANTE = 9*N
-  register complexe_double_t dot; dot.real=0; dot.imaginary =0; //tmp
+  register complexe_double_t tmp;
+  register double dotreal=0, dotimaginary =0;
   const int max = (incX < incY) ? ceil((float)N/(float)incY) : ceil((float)N/(float)incX);
   const int diff = (incY - incX + 1);
-#pragma omp parallel for
+#pragma omp parallel for private(tmp) reduction(+:dotreal) reduction(+:dotimaginary) // on peut pas reduire une structure
   for (register unsigned int i = 0 ; i < max ; i++) {
     ((complexe_double_t*)X+i)->imaginary *= -1;
-#pragma omp critical
-    dot = add_complexe_double(dot,mult_complexe_double(*((complexe_double_t*)X+i),*((complexe_double_t*)Y+diff*i)));
+    tmp = mult_complexe_double(*((complexe_double_t*)X+i),*((complexe_double_t*)Y+diff*i));
+    dotreal +=  tmp.real;
+    dotimaginary +=  tmp.imaginary;
   }
+
   if(N >= 0) {
-    *(complexe_double_t*)dotc = dot;
+    ((complexe_double_t*)dotc)->real = dotreal;
+    ((complexe_double_t*)dotc)->imaginary = dotimaginary;
   } else {
-    ((complexe_double_t*)dotc)->real = 0;((complexe_double_t*)dotc)->imaginary = 0;
+    ((complexe_double_t*)dotc)->real = 0;
+    ((complexe_double_t*)dotc)->imaginary = 0;
   }
 }
 

@@ -24,7 +24,7 @@ commentaire :
 - amélioration d'un facteur 2, voir 3. et ça sera généralement le cas pour tout le reste
 
 
-axpy : NB_EXPE : 1000000 | VECSIZE_OS : 10000
+axpy : NB_EXPE : 1000000 | VECSIZE_FLOPS : 10000
                        BEFORE         |       AFTER 
                     test1 test2 test3 | test1 test2 test3
 simple          ->  0.948 0.955 0.944   2.182 2.262 2.085
@@ -33,6 +33,20 @@ complexe_float  ->  0.493 0.496 1.653   2.692 2.751 4.260
 complexe_double ->  0.741 0.760 1.347   2.244 2.253 3.783
 - On remarque que on "perd" de la performance avec les complexes pour le test1 et test2 mais pas le test3. Pourquoi ? qu'est ce que tom a fait ? de la magie ? En faite non. la magie n'existe pas. Voila. Non je dec. enfaite enfaite, dans les fonctions que j'avais coder dans le TP2 et que j'ai donc repris pour le TP3, pour les complexe, j'appelais des fonctions de complexe.c (multiplication et addition). Ce sont ces appels qui ralentisse autant. Comment j'en suis si sur ? bah le test3 le prouve. j'ai enlevé les appelle et ai tout mis dans les fonctions directement.
 - Amelioration d'un facteur 2, voir 3.
+
+
+dot : NB_EXPE : 1000000 | VECSIZE_FLOPS : 10000
+                       BEFORE    |    AFTER 
+                     test1 test2 | test1 test2 
+simple           ->  1.333 1.329   2.641 2.600
+double           ->  1.337 1.337   2.761 2.782
+complexe_float u ->  0.487 0.485   3.604 3.404
+complexe_float u ->  0.377 0.376   2.746 2.629
+complexe_double u->  0.758 0.755   3.085 2.966
+complexe_double c->  0.740 0.709   2.752 2.555
+- La baisse de performance entre le test1 (AFTER) et le test2 (AFTER) est expliqué par mon pc qui a surchauffé (+de 90°C)... encore ....
+- Amelioration d'un facteur 2 pour les réels
+- amélioration d'un facteur 3 pour les complexe du à la parallelisation mais j'ai du aussi supprimer l'appel à un fonction pour faire un reduction omp et donc accéléré encore plus...
 
 
 gemv : NB_EXPE : 10000 | M & N : 1000
@@ -46,7 +60,6 @@ complexe_double ->  0.736 0.733   2.271 2.167
 - J'ai eu la flemme de faire comme pour axpy et de faire un test3. mais tkt je l'ai fait pour gemm <3
 
 
-
 gemm : NB_EXPE : 10000 | M & N & K : 100
                         BEFORE        |       AFTER 
                     test1 test2 test3 | test1 test2 test3
@@ -56,16 +69,3 @@ complexe_float  ->  0.471 0.470 1.214   2.560 2.474 3.136
 complexe_double ->  0.678 0.674 1.095   2.117 2.120 2.984
 - Amelioration d'un facteur 2, voir 3.
 - Pour le test3 : idem que pour axpy
-
-
-
-
-
-
-
-
-
-
-
-
-Il manque dot non ? Bonne question : les valeurs de GFLOPS sont incohérentes (genre 1221 GFLOPS .... sur un pc portable ...) docn en attendant de trouver d'ou viens le pb -> FLEMME
